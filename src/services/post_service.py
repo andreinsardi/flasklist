@@ -56,6 +56,20 @@ def get(id):
         error = str(err.__dict__['orig'])
         json_abort(500, error)
 
+def get_all():
+    try:
+        post = Post.query.all()
+
+        if not post:
+            json_abort(400,"Posts not found")
+        else:
+            return post
+
+    except SQLAlchemyError as err: 
+        db.session.rollback()
+        error = str(err.__dict__['orig'])
+        json_abort(500, error)
+
 def change(id, data):
     try:
         

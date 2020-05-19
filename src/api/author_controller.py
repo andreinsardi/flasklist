@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 from src.config.restplus import api
 from src.api.serializers.author_serializer import author_request, author_result, author_post_result
-from src.services.author_service import create, change, delete, get, get_author_post
+from src.services.author_service import create, change, delete, get, get_author_post, get_all
  
 
 ns = api.namespace('api/author', description='Operations related to author')
@@ -28,6 +28,11 @@ class AuthorCollection(Resource):
         """ 
         author = create(request.json)
         return author 
+
+    @api.marshal_with(author_result)#define resultado da metodo 
+    def get(self):
+        author_list = get_all()
+        return author_list
 
  
 

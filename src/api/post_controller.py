@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 from src.config.restplus import api
 from src.api.serializers.post_serializer import post_request, post_result
-from src.services.post_service import create, change, delete, get
+from src.services.post_service import create, change, delete, get, get_all
  
 
 ns = api.namespace('api/post', description='Operations related to post')
@@ -18,6 +18,16 @@ class PostCollection(Resource):
         """ 
         post = create(request.json)
         return post 
+    
+    @api.marshal_with(post_result)#define resultado da metodo 
+    def get(self):
+        """
+        Get all posts
+        """
+        post = get_all()
+        
+        return post
+
 
  
 

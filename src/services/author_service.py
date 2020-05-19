@@ -50,6 +50,21 @@ def get(id):
         error = str(err.__dict__['orig'])
         json_abort(500, error)
 
+def get_all():
+    try:
+        
+        author = Author.query.all()
+
+        if not author:
+            json_abort(400, "Author not found")
+        else:
+            return author
+
+    except SQLAlchemyError as err: 
+        db.session.rollback()
+        error = str(err.__dict__['orig'])
+        json_abort(500, error) 
+
 def get_author_post(id):
     try:
         author = Author.query.filter_by(id=id).first()
